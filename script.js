@@ -1377,7 +1377,7 @@ function renderAiPictureGame(root) {
           <span class="pill">Streak ${state.streak}</span>
           <span class="pill">Best ${save.highScores["ai-picture"] || 0}</span>
           <span class="pill">Played ${state.roundsPlayed}</span>
-          <span class="pill">Time ${state.timeLeft}s</span>
+          <span class="pill time-pill">Time ${state.timeLeft}s</span>
         </div>
       </div>
       <div class="timer-bar" aria-hidden="true"><div class="timer-fill" style="--time-width: ${percent}%"></div></div>
@@ -1436,9 +1436,19 @@ function startAiTimer(root) {
       state.roundsPlayed += 1;
       playSound("error");
       clearInterval(state.timer);
-      scheduleAutoAdvance(root); // NEW
+      renderAiPictureGame(root);
+      scheduleAutoAdvance(root);
+      return;
     }
-    renderAiPictureGame(root);
+    const timerFill = root.querySelector(".timer-fill");
+    const timePill = root.querySelector(".time-pill");
+    if (timerFill) {
+      const percent = Math.max(0, (state.timeLeft / AI_ROUND_TIME) * 100);
+      timerFill.style.setProperty("--time-width", percent + "%");
+    }
+    if (timePill) {
+      timePill.textContent = "Time " + state.timeLeft + "s";
+    }
   }, 1000);
 }
 

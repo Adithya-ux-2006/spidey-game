@@ -1777,15 +1777,6 @@
       opacity: 0;
     }
   }
-
-  @keyframes imgFadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  .ai-choice img {
-    animation: imgFadeIn 300ms ease-out;
-  }
   
   @media (max-width: 1040px) {
     .menu-grid {
