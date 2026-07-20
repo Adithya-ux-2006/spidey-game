@@ -1856,6 +1856,7 @@
 
     .game-shell[data-game="ai-picture"] .ai-choice {
       min-height: 200px;
+      aspect-ratio: 16 / 10;
     }
   
     .keyboard {
@@ -1876,6 +1877,7 @@
 
     .game-shell[data-game="ai-picture"] .ai-choice {
       min-height: 180px;
+      aspect-ratio: 4 / 3;
     }
 
     .panel-inner {
@@ -2225,7 +2227,7 @@ body.light-mode .hero-copy {
 .game-shell[data-game="ai-picture"] .ai-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-rows: 1fr;
+  grid-template-rows: repeat(2, minmax(240px, 1fr));
   gap: 16px;
   flex: 1;
   min-height: 0;
@@ -2238,8 +2240,9 @@ body.light-mode .hero-copy {
   border-radius: var(--radius);
   padding: 0;
   background: #0a0a12;
-  min-height: 0;
+  min-height: 240px;
   min-width: 0;
+  aspect-ratio: 4 / 3;
   transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
 }
 
