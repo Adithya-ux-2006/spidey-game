@@ -24,12 +24,16 @@
   }
   
   html {
-    min-height: 100%;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
   }
   
   body {
-    min-height: 100vh;
+    height: 100vh;
+    height: 100dvh;
     margin: 0;
+    overflow: hidden;
     font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     color: var(--text);
     background:
@@ -37,7 +41,6 @@
       radial-gradient(circle at calc(78% - var(--px) * 1px) calc(18% - var(--py) * 1px), rgba(13, 92, 255, 0.34), transparent 26rem),
       linear-gradient(135deg, rgba(4, 7, 19, 0.75) 0%, rgba(7, 21, 47, 0.7) 42%, rgba(18, 4, 10, 0.8) 100%),
       url("Untitled design.png") center center / cover no-repeat fixed;
-    overflow-x: hidden;
   }
   
   body.light-mode {
@@ -165,22 +168,26 @@
   }
   
   #app {
-    min-height: 100vh;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
   }
   
   .view {
     width: min(1180px, calc(100% - 32px));
-    min-height: 100vh;
+    height: 100%;
     margin: 0 auto;
-    padding: 22px 0 46px;
+    padding: clamp(12px, 2vh, 22px) 0 clamp(16px, 3vh, 46px);
     opacity: 0;
-    transform: translateY(12px);
-    transition: opacity 280ms ease, transform 280ms ease;
+    transform: translateY(12px) scale(0.98);
+    transition: opacity 350ms cubic-bezier(0.22, 1, 0.36, 1), transform 350ms cubic-bezier(0.22, 1, 0.36, 1);
+    overflow-y: auto;
+    overflow-x: hidden;
   }
   
   .view.is-visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
   
   .topbar {
@@ -249,7 +256,12 @@
     background: rgba(255, 255, 255, 0.08);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
     font-size: 1.05rem;
-    transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+    transition: transform 150ms cubic-bezier(0.22, 1, 0.36, 1), border-color 150ms cubic-bezier(0.22, 1, 0.36, 1), background 150ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 150ms cubic-bezier(0.22, 1, 0.36, 1), filter 150ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  
+  .btn:active:not(:disabled) {
+    transform: scale(0.96);
+    transition-duration: 80ms;
   }
   
   .btn:hover,
@@ -371,8 +383,8 @@
       rgba(4, 10, 22, 0.58);
     box-shadow: var(--shadow);
     backdrop-filter: blur(18px);
-    animation: arcadeSlideUp 520ms cubic-bezier(0.2, 0.85, 0.2, 1) both;
-    transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+    animation: arcadeSlideUp 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    transition: transform 150ms cubic-bezier(0.22, 1, 0.36, 1), border-color 150ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 150ms cubic-bezier(0.22, 1, 0.36, 1);
   }
   
   .menu-grid .game-card:nth-child(1),
@@ -655,7 +667,7 @@
     background: rgba(255, 255, 255, 0.1);
     font-weight: 900;
     line-height: 1.15;
-    transition: transform 180ms cubic-bezier(0.2, 0.85, 0.2, 1), background 140ms ease, border-color 140ms ease, box-shadow 180ms ease;
+    transition: transform 150ms cubic-bezier(0.22, 1, 0.36, 1), background 150ms cubic-bezier(0.22, 1, 0.36, 1), border-color 150ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 150ms cubic-bezier(0.22, 1, 0.36, 1);
     overflow-wrap: anywhere;
     will-change: transform;
   }
@@ -1245,7 +1257,7 @@
     padding: 0;
     background: rgba(255, 255, 255, 0.08);
     min-height: 260px;
-    transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+  transition: transform 150ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 150ms cubic-bezier(0.22, 1, 0.36, 1), border-color 150ms cubic-bezier(0.22, 1, 0.36, 1);
   }
   
   .ai-choice::before {
@@ -2325,4 +2337,287 @@ body.light-mode .hero-copy {
   margin: 0;
   opacity: 0.85;
   color: #f3ecdf;
+}
+
+/* ============================================================
+   MOTION ENHANCEMENT BLOCK
+   ============================================================ */
+
+/* MOTION: Viewport-locked single-view overflow on game panels */
+.game-shell[data-game="ai-picture"] .game-panel,
+.game-shell[data-game="connections"] .game-panel {
+  max-height: calc(100dvh - 80px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.2) transparent;
+}
+
+.game-shell[data-game="ai-picture"] .panel-inner {
+  min-height: 0;
+}
+
+/* MOTION: Standardized hover feedback — desktop only */
+@media (hover: hover) {
+  .btn:hover:not(:disabled) {
+    filter: brightness(1.12);
+    transform: translateY(-1px) scale(1.02);
+  }
+
+  .game-card:hover:not(:disabled) {
+    transform: translateY(-7px) scale(1.02);
+  }
+
+  .home-quadrant:hover:not(:disabled) {
+    transform: scale(1.035);
+  }
+
+  .connection-card:hover:not(:disabled):not(.selected) {
+    transform: translateY(-3px) scale(1.02);
+  }
+
+  .ai-choice:hover:not(:disabled) {
+    transform: translateY(-4px) scale(1.015);
+  }
+
+  .key:hover:not(:disabled) {
+    filter: brightness(1.15);
+    transform: scale(1.04);
+  }
+}
+
+/* MOTION: Tactile press feedback on all interactive elements */
+.btn:active:not(:disabled) {
+  transform: scale(0.96) !important;
+  transition-duration: 80ms !important;
+}
+
+.connection-card:active:not(:disabled):not(.selected) {
+  transform: scale(0.95);
+  transition-duration: 80ms;
+}
+
+.ai-choice:active:not(:disabled) {
+  transform: scale(0.96);
+  transition-duration: 80ms;
+}
+
+.key:active:not(:disabled) {
+  transform: scale(0.92);
+  transition-duration: 60ms;
+}
+
+.game-card:active:not(:disabled),
+.home-quadrant:active:not(:disabled) {
+  transform: scale(0.97);
+  transition-duration: 80ms;
+}
+
+/* MOTION: Score/counter pop animation */
+@keyframes scorePop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+.pill.pop {
+  animation: scorePop 300ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+/* MOTION: AI round crossfade — incoming grid fades + scales in */
+@keyframes gridCrossfadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.ai-grid.crossfading-in {
+  animation: gridCrossfadeIn 400ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: opacity, transform;
+}
+
+/* MOTION: Result popup crossfade in */
+@keyframes popupCrossfade {
+  0% {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.result-popup {
+  animation: popupCrossfade 350ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: opacity, transform;
+}
+
+/* MOTION: Win overlay crossfade */
+.win-overlay {
+  animation: popupCrossfade 400ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: opacity, transform;
+}
+
+/* MOTION: Solved group enter animation */
+@keyframes solvedEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.solved-group {
+  animation: solvedEnter 400ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: opacity, transform;
+}
+
+/* MOTION: #app initial fade-in on first paint */
+@keyframes appFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+#app {
+  opacity: 0;
+  animation: appFadeIn 300ms cubic-bezier(0.22, 1, 0.36, 1) 50ms both;
+}
+
+/* MOTION: Timer fill smooth transition */
+.timer-fill {
+  transition: width 800ms linear;
+}
+
+/* MOTION: Connection card hover — desktop only */
+@media (hover: hover) {
+  .connection-card:hover:not(:disabled):not(.selected) {
+    border-color: rgba(255, 255, 255, 0.48);
+  }
+}
+
+/* MOTION: Connection card active press */
+.connection-card:active:not(:disabled):not(.selected) {
+  transform: scale(0.95);
+  transition-duration: 80ms;
+}
+
+/* MOTION: Keyboard key transitions */
+.key {
+  transition: transform 100ms cubic-bezier(0.22, 1, 0.36, 1), background 100ms cubic-bezier(0.22, 1, 0.36, 1), border-color 100ms cubic-bezier(0.22, 1, 0.36, 1), filter 100ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* MOTION: Letter slot fill transition */
+.letter-slot {
+  transition: background 200ms cubic-bezier(0.22, 1, 0.36, 1), border-color 200ms cubic-bezier(0.22, 1, 0.36, 1), color 200ms cubic-bezier(0.22, 1, 0.36, 1), transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* MOTION: Hint pill enter */
+@keyframes hintEnter {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hint-pill {
+  animation: hintEnter 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* MOTION: Reveal banner enter */
+@keyframes bannerSlide {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal-banner {
+  animation: bannerSlide 350ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* MOTION: Topbar transitions */
+.topbar {
+  transition: background 300ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* MOTION: Game panel transitions */
+.game-panel {
+  transition: background 300ms cubic-bezier(0.22, 1, 0.36, 1), border-color 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* MOTION: Confetti fall cleanup — ensure GPU layer freed */
+.confetti {
+  will-change: transform, opacity;
+}
+
+/* MOTION: Cross-row active transition */
+.cross-row {
+  transition: border-color 200ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 200ms cubic-bezier(0.22, 1, 0.36, 1), background 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* MOTION: Word box / cross-input transition */
+.word-box,
+.cross-input {
+  transition: background 200ms cubic-bezier(0.22, 1, 0.36, 1), border-color 200ms cubic-bezier(0.22, 1, 0.36, 1), color 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* MOTION: Mistake dot transition */
+.mistake-dot {
+  transition: background 300ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* MOTION: Win box enter */
+.win-box {
+  animation: popupCrossfade 400ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ============================================================
+   MOTION: prefers-reduced-motion — accessibility fallback
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .view {
+    transform: none !important;
+    opacity: 1 !important;
+    transition: none !important;
+  }
+
+  .view.is-visible {
+    transform: none !important;
+  }
+
+  #app {
+    opacity: 1 !important;
+    animation: none !important;
+  }
+
+  .ai-grid.crossfading-in {
+    animation: none !important;
+  }
 }

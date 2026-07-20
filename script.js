@@ -306,6 +306,14 @@ function playSound(type) {
   }).catch(() => {});
 }
 
+function triggerPop(element) {
+  if (!element) return;
+  element.classList.remove("pop");
+  void element.offsetWidth;
+  element.classList.add("pop");
+  element.addEventListener("animationend", () => element.classList.remove("pop"), { once: true });
+}
+
 function shuffle(array) {
   const copy = array.slice();
   for (let index = copy.length - 1; index > 0; index -= 1) {
@@ -1373,8 +1381,8 @@ function renderAiPictureGame(root) {
           <p class="notice">${revealed ? "" : "Trust the scan. Pick the AI image."}</p>
         </div>
         <div class="status-strip">
-          <span class="pill">Score ${state.score}</span>
-          <span class="pill">Streak ${state.streak}</span>
+          <span class="pill score-pill">Score ${state.score}</span>
+          <span class="pill streak-pill">Streak ${state.streak}</span>
           <span class="pill">Best ${save.highScores["ai-picture"] || 0}</span>
           <span class="pill">Played ${state.roundsPlayed}</span>
           <span class="pill time-pill">Time ${state.timeLeft}s</span>
@@ -1481,12 +1489,18 @@ function selectAiPicture(index, root) {
     playSound("error");
   }
   renderAiPictureGame(root);
-  scheduleAutoAdvance(root); // NEW
+  const scorePill = root.querySelector(".score-pill");
+  const streakPill = root.querySelector(".streak-pill");
+  if (index === round.correct) {
+    triggerPop(scorePill);
+    triggerPop(streakPill);
+  }
+  scheduleAutoAdvance(root);
 }
 
 function nextAiRound(root) {
   const state = gameState.aiPicture;
-  clearTimeout(state.advanceTimer); // NEW — prevents double-advance if button is clicked early
+  clearTimeout(state.advanceTimer);
   if (state.selected === null) return;
   playSound("click");
   state.round += 1;
@@ -1497,7 +1511,26 @@ function nextAiRound(root) {
   }
   state.selected = null;
   state.timeLeft = AI_ROUND_TIME;
+  const grid = root.querySelector(".ai-grid");
+  if (grid) {
+    grid.classList.add("crossfading-out");
+    grid.style.opacity = "0";
+    grid.style.transform = "scale(0.97)";
+    grid.style.transition = "opacity 150ms cubic-bezier(0.4, 0, 0.2, 1), transform 150ms cubic-bezier(0.4, 0, 0.2, 1)";
+    setTimeout(() => {
+      renderAiPictureGame(root);
+      const newGrid = root.querySelector(".ai-grid");
+      if (newGrid) {
+        newGrid.classList.add("crossfading-in");
+      }
+      preloadNextRounds(state);
+      startAiTimer(root);
+    }, 160);
+    return;
+  }
   renderAiPictureGame(root);
+  const newGrid = root.querySelector(".ai-grid");
+  if (newGrid) newGrid.classList.add("crossfading-in");
   preloadNextRounds(state);
   startAiTimer(root);
 }
