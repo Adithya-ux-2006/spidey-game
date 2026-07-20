@@ -1224,32 +1224,54 @@ const imageDatabase = [
     real: "assets/images/real/realtony.jpg",
     ai: "assets/images/ai/aitony.png"
   },
-   
-   {
+  {
     real: "assets/images/real/realhuddle.jpg",
     ai: "assets/images/ai/aihuddle.jpg"
-   },
-   {
+  },
+  {
     real: "assets/images/real/realsp.jpg",
     ai: "assets/images/ai/aisp.jpg"
-   },
-
-   {
+  },
+  {
     real: "assets/images/real/realspidernoir.jpg",
     ai: "assets/images/ai/aispidernoir.png"
-   },
-
-   {
+  },
+  {
     real: "assets/images/real/realeyes.jpg",
     ai: "assets/images/ai/aieyes.png"
-   },
-  
-   {
+  },
+  {
     real: "assets/images/real/realindian.jpg",
     ai: "assets/images/ai/aiindian.jpg"
-   },
-  
+  }
 ];
+
+const imageCache = new Map();
+
+function preloadImage(src) {
+  if (imageCache.has(src)) return imageCache.get(src);
+  const img = new Image();
+  img.src = src;
+  img.decoding = "async";
+  imageCache.set(src, img);
+  return img;
+}
+
+function preloadNextRounds(state) {
+  for (let i = state.round + 1; i < Math.min(state.round + 3, state.rounds.length); i++) {
+    const round = state.rounds[i];
+    if (round) {
+      round.images.forEach(preloadImage);
+    }
+  }
+}
+
+function preloadAllImages() {
+  imageDatabase.forEach(pair => {
+    preloadImage(pair.real);
+    preloadImage(pair.ai);
+  });
+}
 
 const AI_ROUND_TIME = 20;
 
@@ -1312,7 +1334,7 @@ function renderAiPictureGame(root) {
     const selected = revealed && state.selected === index ? " selected-choice" : "";
     return `
       <button class="ai-choice${correct}${wrong}${selected}" type="button" data-ai-choice="${index}" ${revealed ? "disabled" : ""}>
-        <img src="${src}" alt="Choice ${index + 1}">
+        <img src="${src}" alt="Choice ${index + 1}" loading="eager" decoding="async">
         <span>${String.fromCharCode(65 + index)}</span>
         <i class="iron-leg leg-1" aria-hidden="true"></i>
         <i class="iron-leg leg-2" aria-hidden="true"></i>
@@ -1372,7 +1394,9 @@ function resultAiText(state, round) {
 }
 
 function setupAiPicture(root) {
+  preloadAllImages();
   renderAiPictureGame(root);
+  preloadNextRounds(gameState.aiPicture);
   startAiTimer(root);
   root.addEventListener("click", (event) => {
     const choice = event.target.closest("[data-ai-choice]");
@@ -1464,6 +1488,7 @@ function nextAiRound(root) {
   state.selected = null;
   state.timeLeft = AI_ROUND_TIME;
   renderAiPictureGame(root);
+  preloadNextRounds(state);
   startAiTimer(root);
 }
  
