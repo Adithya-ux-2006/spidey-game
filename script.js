@@ -314,6 +314,22 @@ function triggerPop(element) {
   element.addEventListener("animationend", () => element.classList.remove("pop"), { once: true });
 }
 
+function runCountUp(el) {
+  const target = parseInt(el.dataset.countTo, 10);
+  const total = el.dataset.countTotal;
+  const duration = 500;
+  const start = performance.now();
+  function tick(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const current = Math.round(eased * target);
+    el.textContent = total ? current + "/" + total : String(current);
+    if (progress < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
 function shuffle(array) {
   const copy = array.slice();
   for (let index = copy.length - 1; index > 0; index -= 1) {
@@ -1322,13 +1338,33 @@ function renderAiPicture() {
 function renderAiPictureGame(root) {
   const state = gameState.aiPicture;
   if (state.finished) {
+    const isPerfect = state.score === state.roundsPlayed && state.score > 0;
+    const perfectClass = isPerfect ? " results-perfect" : "";
     root.innerHTML = `
-      <div class="win-box">
-        <h3>Round Set Complete</h3>
-        <p>Score ${state.score}/${state.roundsPlayed}. Best streak ${state.bestStreak}.</p>
-        <button class="btn primary" type="button" data-ai-action="restart">Restart Rounds</button>
+      <div class="results-overlay${perfectClass}">
+        <div class="results-card">
+          ${isPerfect ? `<div class="results-badge">Perfect!</div>` : ""}
+          <h3 class="results-title">Round Set Complete</h3>
+          <div class="results-stats">
+            <div class="results-stat-chip">
+              <span class="results-stat-label">Score</span>
+              <span class="results-stat-value" data-count-to="${state.score}" data-count-total="${state.roundsPlayed}">${state.score}/${state.roundsPlayed}</span>
+            </div>
+            <div class="results-stat-chip">
+              <span class="results-stat-label">Best Streak</span>
+              <span class="results-stat-value" data-count-to="${state.bestStreak}" data-count-total="">${state.bestStreak}</span>
+            </div>
+          </div>
+          <div class="results-actions">
+            <button class="btn primary results-btn" type="button" data-ai-action="restart">Restart Rounds</button>
+            <button class="btn results-btn results-btn-ghost" type="button" data-home>Home</button>
+          </div>
+        </div>
       </div>
     `;
+    requestAnimationFrame(() => {
+      root.querySelectorAll("[data-count-to]").forEach(runCountUp);
+    });
     return;
   }
   const round = state.rounds[state.round];
@@ -1409,8 +1445,13 @@ function setupAiPicture(root) {
   root.addEventListener("click", (event) => {
     const choice = event.target.closest("[data-ai-choice]");
     const action = event.target.closest("[data-ai-action]");
+    const homeBtn = event.target.closest("[data-home]");
     if (choice) {
       selectAiPicture(Number(choice.dataset.aiChoice), root);
+      return;
+    }
+    if (homeBtn) {
+      navigate("home");
       return;
     }
     if (!action) return;
@@ -1418,7 +1459,7 @@ function setupAiPicture(root) {
     if (name === "next") nextAiRound(root);
     if (name === "restart") {
       clearInterval(gameState.aiPicture.timer);
-      clearTimeout(gameState.aiPicture.advanceTimer); // NEW
+      clearTimeout(gameState.aiPicture.advanceTimer);
       gameState.aiPicture = createAiPictureState();
       playSound("click");
       renderAiPictureGame(root);

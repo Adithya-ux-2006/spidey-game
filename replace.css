@@ -2590,6 +2590,242 @@ body.light-mode .hero-copy {
 }
 
 /* ============================================================
+   RESULTS-SCREEN: Centered results overlay + card
+   ============================================================ */
+
+/* RESULTS-SCREEN: Full-viewport overlay with backdrop dim/blur */
+.results-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding: clamp(12px, 3vw, 24px);
+  background: rgba(2, 5, 10, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* RESULTS-SCREEN: The card itself — centered focal point */
+.results-card {
+  position: relative;
+  width: min(500px, 100%);
+  padding: clamp(20px, 4vw, 36px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 12px;
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% 0, rgba(46, 229, 157, 0.18), transparent 55%),
+    var(--panel-strong);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+  animation: resultsCardEnter 350ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: opacity, transform;
+}
+
+/* RESULTS-SCREEN: Card entrance — scale-in + fade */
+@keyframes resultsCardEnter {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* RESULTS-SCREEN: Title — scale-responsive typography */
+.results-title {
+  margin: 0 0 16px;
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  font-weight: 1000;
+  line-height: 1.1;
+}
+
+/* RESULTS-SCREEN: Stat chips container — side by side */
+.results-stats {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+/* RESULTS-SCREEN: Individual stat chip */
+.results-stat-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 110px;
+  padding: 12px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* RESULTS-SCREEN: Stat label */
+.results-stat-label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+/* RESULTS-SCREEN: Stat value — bold number */
+.results-stat-value {
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  font-weight: 1000;
+  color: var(--text);
+}
+
+/* RESULTS-SCREEN: Button row */
+.results-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+/* RESULTS-SCREEN: Button sizing — comfortable mobile tap targets */
+.results-btn {
+  min-height: 48px;
+  padding: 10px 22px;
+  font-size: clamp(0.95rem, 2vw, 1.05rem);
+}
+
+/* RESULTS-SCREEN: Ghost/secondary button */
+.results-btn-ghost {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  color: var(--muted);
+}
+
+.results-btn-ghost:hover,
+.results-btn-ghost:focus-visible {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.46);
+}
+
+/* ============================================================
+   RESULTS-SCREEN: Perfect score celebration
+   ============================================================ */
+
+/* RESULTS-SCREEN: Animated glow border on perfect run */
+.results-perfect .results-card {
+  border-color: rgba(46, 229, 157, 0.6);
+  box-shadow:
+    0 24px 80px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(46, 229, 157, 0.25),
+    0 0 80px rgba(46, 229, 157, 0.12);
+  animation: resultsCardEnter 350ms cubic-bezier(0.22, 1, 0.36, 1) both,
+             perfectGlowPulse 2s ease-in-out infinite 400ms;
+}
+
+@keyframes perfectGlowPulse {
+  0%, 100% {
+    box-shadow:
+      0 24px 80px rgba(0, 0, 0, 0.5),
+      0 0 40px rgba(46, 229, 157, 0.25),
+      0 0 80px rgba(46, 229, 157, 0.12);
+  }
+  50% {
+    box-shadow:
+      0 24px 80px rgba(0, 0, 0, 0.5),
+      0 0 60px rgba(46, 229, 157, 0.4),
+      0 0 120px rgba(46, 229, 157, 0.2);
+  }
+}
+
+/* RESULTS-SCREEN: Perfect badge above title */
+.results-badge {
+  display: inline-block;
+  margin-bottom: 8px;
+  padding: 4px 14px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(46, 229, 157, 0.9), rgba(13, 92, 255, 0.8));
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 1000;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  animation: badgePop 400ms cubic-bezier(0.22, 1, 0.36, 1) 200ms both;
+}
+
+@keyframes badgePop {
+  0% {
+    opacity: 0;
+    transform: scale(0.6) translateY(-8px);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.08) translateY(1px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* RESULTS-SCREEN: Perfect score stat chip accent */
+.results-perfect .results-stat-chip {
+  border-color: rgba(46, 229, 157, 0.35);
+  background: rgba(46, 229, 157, 0.08);
+}
+
+.results-perfect .results-stat-value {
+  color: var(--green);
+}
+
+/* RESULTS-SCREEN: CSS-only confetti burst for perfect score */
+.results-perfect .results-card::before,
+.results-perfect .results-card::after {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: confettiBurst 1.2s ease-out forwards;
+}
+
+.results-perfect .results-card::before {
+  top: 20%;
+  left: 15%;
+  background: var(--green);
+  animation-delay: 300ms;
+}
+
+.results-perfect .results-card::after {
+  top: 18%;
+  right: 18%;
+  background: var(--gold);
+  animation-delay: 450ms;
+}
+
+@keyframes confettiBurst {
+  0% {
+    opacity: 1;
+    transform: scale(1) translate(0, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5) translate(var(--conf-x, 20px), var(--conf-y, -40px));
+  }
+}
+
+.results-perfect .results-card::before {
+  --conf-x: -24px;
+  --conf-y: -36px;
+}
+
+.results-perfect .results-card::after {
+  --conf-x: 28px;
+  --conf-y: -42px;
+}
+
+/* ============================================================
    MOTION: prefers-reduced-motion — accessibility fallback
    ============================================================ */
 @media (prefers-reduced-motion: reduce) {
