@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="spiderNoirTitle">
+  <title id="spiderNoirTitle">Spider-Noir spider mark</title>
+  <circle cx="64" cy="64" r="56" fill="#111111" stroke="#e6d6b0" stroke-width="4"/>
+  <path d="M64 23c8 0 15 7 15 16 0 5-2 10-5 13 10 4 17 15 17 29 0 19-12 31-27 31S37 100 37 81c0-14 7-25 17-29-3-3-5-8-5-13 0-9 7-16 15-16Z" fill="#f1ead9"/>
+  <path d="M64 49c-18 0-35-10-45-27M63 58c-23 4-39 14-51 31M62 67c-20 9-32 24-39 44M64 49c18 0 35-10 45-27M65 58c23 4 39 14 51 31M66 67c20 9 32 24 39 44" fill="none" stroke="#f1ead9" stroke-width="6" stroke-linecap="round"/>
+  <path d="M50 34c6 5 22 5 28 0" fill="none" stroke="#cc1028" stroke-width="5" stroke-linecap="round"/>
+  <path d="M52 74c5 4 8 6 12 6s7-2 12-6" fill="none" stroke="#111111" stroke-width="4" stroke-linecap="round"/>
+  <path d="M34 28 94 100M94 28 34 100" stroke="#ffffff" stroke-width="2" opacity="0.16"/>
+</svg>
