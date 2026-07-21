@@ -359,21 +359,21 @@ function lettersOnly(value) {
     {
       title: "Case File: Rogues Gallery",
       groups: [
-        { name: "Classic Villains", hint: "One of Spider-Man's earliest recurring foes.", color: "#e8d9b7", words: ["Vulture", "Rhino", "Scorpion", "Shocker"] },
-        { name: "Sinister Six Members", hint: "Part of the villain team that first teamed up against Spidey.", color: "#d8c09a", words: ["Doc Ock", "Electro", "Sandman", "Kraven"] },
+        { name: "Animal-Themed Villains", hint: "A Spider-Man villain whose alias names an animal.", color: "#e8d9b7", words: ["Vulture", "Rhino", "Scorpion", "Lizard"] },
+        { name: "New York Crime Bosses", hint: "A criminal leader who has controlled part of New York's underworld.", color: "#d8c09a", words: ["Kingpin", "Hammerhead", "Tombstone", "Silvermane"] },
         { name: "Symbiote Villains", hint: "Comes with a black alien suit.", color: "#c9aa76", words: ["Venom", "Carnage", "Riot", "Toxin"] },
-        { name: "Villains' Real Names", hint: "The name behind the mask.", color: "#a33a2f", words: ["Norman Osborn", "Otto Octavius", "Flint Marko", "Max Dillon"] }
+        { name: "Goblin Aliases", hint: "A Spider-Man villain alias containing the word Goblin.", color: "#a33a2f", words: ["Green Goblin", "Hobgoblin", "Demogoblin", "Goblin Knight"] }
       ]
     }
   ],
   villainsTwo: [
     {
-      title: "Case File: Underworld Ledger",
+      title: "Case File: Villain Identity Files",
       groups: [
-        { name: "Underworld Bosses", hint: "Runs the criminal underworld of New York.", color: "#e8d9b7", words: ["Kingpin", "Hammerhead", "Tombstone", "Silvermane"] },
-        { name: "Masters of Disguise", hint: "A villain known for illusions or disguises.", color: "#d8c09a", words: ["Mysterio", "Chameleon", "Hobgoblin", "Jack O'Lantern"] },
-        { name: "Symbiote Hosts", hint: "A person who has worn a symbiote.", color: "#c9aa76", words: ["Eddie Brock", "Cletus Kasady", "Flash Thompson", "Mac Gargan"] },
-        { name: "Animal-Inspired Villains", hint: "Named after a creature.", color: "#a33a2f", words: ["Lizard", "Beetle", "Vulture", "Scorpion"] }
+        { name: "Sinister Six Members", hint: "A villain who has served on a version of the Sinister Six.", color: "#e8d9b7", words: ["Doc Ock", "Electro", "Sandman", "Kraven"] },
+        { name: "Goblin Identities", hint: "A person who has operated as a Goblin villain.", color: "#d8c09a", words: ["Norman Osborn", "Harry Osborn", "Roderick Kingsley", "Phil Urich"] },
+        { name: "Symbiote Hosts", hint: "A person who has bonded with a symbiote.", color: "#c9aa76", words: ["Eddie Brock", "Cletus Kasady", "Flash Thompson", "Anne Weying"] },
+        { name: "Women Who Opposed Spider-Man", hint: "A female character who has fought or obstructed Spider-Man.", color: "#a33a2f", words: ["Black Cat", "Silver Sable", "Calypso", "Shriek"] }
       ]
     }
   ],
@@ -381,10 +381,10 @@ function lettersOnly(value) {
     {
       title: "Case File: Spider-Verse Dossier I",
       groups: [
-        { name: "Spider Variants", hint: "An alternate-universe Spider-Man.", color: "#e8d9b7", words: ["Spider-Noir", "Spider-Punk", "Spider-Ham", "Scarlet Spider"] },
-        { name: "2099 Universe", hint: "Tied to the futuristic Spider-Man 2099.", color: "#d8c09a", words: ["Miguel O'Hara", "Alchemax", "Neon City", "Lyla"] },
-        { name: "Multiverse Terms", hint: "A designation for a specific universe.", color: "#c9aa76", words: ["Earth-616", "Earth-42", "Earth-65", "Spider-Verse"] },
-        { name: "Variant Signature Traits", hint: "A signature ability of a Spider variant.", color: "#a33a2f", words: ["Web Wings", "Detective Instincts", "Sonic Guitar", "Toon Force"] }
+        { name: "Spider Variants", hint: "A Spider hero from an alternate universe.", color: "#e8d9b7", words: ["Spider-Noir", "Spider-Punk", "Spider-Ham", "Peni Parker"] },
+        { name: "Spider-Man 2099 Terms", hint: "A person, place, company, or AI from Miguel O'Hara's world.", color: "#d8c09a", words: ["Miguel O'Hara", "Alchemax", "Nueva York", "Lyla"] },
+        { name: "Earth Designations", hint: "A numbered universe in Spider-Man's multiverse.", color: "#c9aa76", words: ["Earth-616", "Earth-42", "Earth-65", "Earth-1610"] },
+        { name: "Spider-Verse Villains", hint: "An antagonist featured in the animated Spider-Verse films.", color: "#a33a2f", words: ["Kingpin", "Prowler", "The Spot", "Liv Octavius"] }
       ]
     }
   ],
@@ -406,7 +406,7 @@ function lettersOnly(value) {
         { name: "Peter's Circle", hint: "Someone close to Peter Parker.", color: "#e8d9b7", words: ["MJ", "Ned", "Aunt May", "Gwen"] },
         { name: "Spider Gadgets", hint: "Equipment built into the suit.", color: "#d8c09a", words: ["Web-Shooters", "Spider-Tracer", "Web Wings", "Impact Webbing"] },
         { name: "Daily Bugle Terms", hint: "Associated with the newspaper Peter works for.", color: "#c9aa76", words: ["J. Jonah Jameson", "Betty Brant", "Robbie Robertson", "Front Page"] },
-        { name: "Spider Powers", hint: "An ability from the spider bite.", color: "#a33a2f", words: ["Spider-Sense", "Wall-Crawling", "Super Strength", "Web-Slinging"] }
+        { name: "Innate Spider Powers", hint: "An ability Peter gained from his transformation, not a gadget.", color: "#a33a2f", words: ["Spider-Sense", "Wall-Crawling", "Super Strength", "Super Agility"] }
       ]
     }
   ],
@@ -417,7 +417,7 @@ function lettersOnly(value) {
         { name: "Comic Runs", hint: "The title of a long-running comic series.", color: "#e8d9b7", words: ["Amazing Spider-Man", "Ultimate Spider-Man", "Spectacular Spider-Man", "Web of Spider-Man"] },
         { name: "Spider-Man Video Games", hint: "A Spider-Man game you could play.", color: "#d8c09a", words: ["Spider-Man 2", "Miles Morales", "Web of Shadows", "Shattered Dimensions"] },
         { name: "NYC Locations", hint: "A place you'd find in Spider-Man's New York.", color: "#c9aa76", words: ["Queens", "Oscorp Tower", "Daily Bugle", "Chrysler Building"] },
-        { name: "Spidey Concepts", hint: "A phrase closely tied to Spider-Man's identity.", color: "#a33a2f", words: ["Great Power", "Friendly Neighborhood", "Web-Slinging", "Puny Parker"] }
+        { name: "Peter Parker Love Interests", hint: "A character who has had a significant romance with Peter Parker.", color: "#a33a2f", words: ["Mary Jane Watson", "Gwen Stacy", "Felicia Hardy", "Betty Brant"] }
       ]
     }
   ],
@@ -1271,6 +1271,8 @@ const imageDatabase = [
 ];
 
 const imageCache = new Map();
+const AI_ROUNDS_PER_SET = 5;
+let availableImagePairs = [];
 
 function preloadImage(src) {
   if (imageCache.has(src)) return imageCache.get(src);
@@ -1299,8 +1301,20 @@ function preloadAllImages() {
 
 const AI_ROUND_TIME = 20;
 
+function takeNextImageBatch() {
+  if (availableImagePairs.length < AI_ROUNDS_PER_SET) {
+    const carriedPairs = availableImagePairs.slice();
+    const refillPairs = shuffle(
+      imageDatabase.filter((pair) => !carriedPairs.includes(pair))
+    );
+    availableImagePairs = carriedPairs.concat(refillPairs);
+  }
+
+  return availableImagePairs.splice(0, AI_ROUNDS_PER_SET);
+}
+
 function buildAiRounds() {
-  return shuffle(imageDatabase).map((pair) => {
+  return takeNextImageBatch().map((pair) => {
     const mixed = shuffle([
       { src: pair.real, kind: "real" },
       { src: pair.ai, kind: "ai" }
@@ -1356,7 +1370,7 @@ function renderAiPictureGame(root) {
             </div>
           </div>
           <div class="results-actions">
-            <button class="btn primary results-btn" type="button" data-ai-action="restart">Restart Rounds</button>
+            <button class="btn primary results-btn" type="button" data-ai-action="restart">Play Next 5 Images</button>
             <button class="btn results-btn results-btn-ghost" type="button" data-home>Home</button>
           </div>
         </div>
