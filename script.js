@@ -1271,6 +1271,8 @@ const imageDatabase = [
 ];
 
 const imageCache = new Map();
+const AI_ROUNDS_PER_SET = 5;
+let availableImagePairs = [];
 
 function preloadImage(src) {
   if (imageCache.has(src)) return imageCache.get(src);
@@ -1299,8 +1301,20 @@ function preloadAllImages() {
 
 const AI_ROUND_TIME = 20;
 
+function takeNextImageBatch() {
+  if (availableImagePairs.length < AI_ROUNDS_PER_SET) {
+    const carriedPairs = availableImagePairs.slice();
+    const refillPairs = shuffle(
+      imageDatabase.filter((pair) => !carriedPairs.includes(pair))
+    );
+    availableImagePairs = carriedPairs.concat(refillPairs);
+  }
+
+  return availableImagePairs.splice(0, AI_ROUNDS_PER_SET);
+}
+
 function buildAiRounds() {
-  return shuffle(imageDatabase).map((pair) => {
+  return takeNextImageBatch().map((pair) => {
     const mixed = shuffle([
       { src: pair.real, kind: "real" },
       { src: pair.ai, kind: "ai" }
@@ -1356,7 +1370,7 @@ function renderAiPictureGame(root) {
             </div>
           </div>
           <div class="results-actions">
-            <button class="btn primary results-btn" type="button" data-ai-action="restart">Restart Rounds</button>
+            <button class="btn primary results-btn" type="button" data-ai-action="restart">Play Next 5 Images</button>
             <button class="btn results-btn results-btn-ghost" type="button" data-home>Home</button>
           </div>
         </div>
